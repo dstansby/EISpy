@@ -135,11 +135,13 @@ class EISObservationL2(EISObservation):
         self._vmaps = dict(zip(wavelengths, vmaps))
         self._wmaps = dict(zip(wavelengths, wmaps))
 
-    def velocity_map(wavelength):
-        return self._vmaps[wavelength]
+    def _velocity_map(self, wavelength):
+        raise NotImplementedError
+        # return self._vmaps[wavelength]
 
-    def width_map(wavelength):
-        return self._wmaps[wavelength]
+    def _width_map(self, wavelength):
+        raise NotImplementedError
+        # return self._wmaps[wavelength]
 
 
 class EISCube(NDCube):
@@ -198,7 +200,7 @@ def _dictionarize_header(data_header, primary_header, window):
     dh['CRPIX3'] = 1
     dh['CRVAL3'] = dh['TWAVE']
     dh.pop('COMMENT', '')
-    dh.pop('NAXIS1')
+    dh.pop('NAXIS1', None)
 
     return _clean(dh)
 
